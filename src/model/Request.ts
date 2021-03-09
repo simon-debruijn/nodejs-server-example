@@ -1,7 +1,7 @@
 import { Request as ExpressRequest } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 import { ParsedQs } from 'qs';
-import { HttpRequest } from '../types/HttpRequest';
+import { HttpRequest } from '../interfaces/HttpRequest';
 
 class Request implements HttpRequest {
   private _path: string;

@@ -2,7 +2,7 @@ import {
   Request as ExpressRequest,
   Response as ExpressResponse,
 } from 'express';
-import { Request } from '../entities/Request';
+import { Request } from '../../model/Request';
 import { UsersRepository } from './UsersRepository';
 
 const handleUsersRequests = async (
