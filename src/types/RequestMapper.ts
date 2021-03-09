@@ -3,7 +3,7 @@ import { HttpResponse } from './HttpResponse';
 
 interface RequestMapper<T> {
   [key: string]: (
-    usersList: T[]
+    list: T[]
   ) => (httpRequest: HttpRequest) => Promise<HttpResponse>;
 }
 
