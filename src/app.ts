@@ -1,10 +1,11 @@
 import express from 'express';
-import { handleUsersRequests } from './api/users/handleUsersRequests';
+import { UserRouter } from './user/UserRouter';
 const app = express();
 
 app.use(express.json());
 
-app.all('/users', handleUsersRequests);
-app.all('/users/:id', handleUsersRequests);
+const userRouter = new UserRouter();
+
+app.all('/users*', userRouter.router);
 
 export default app;

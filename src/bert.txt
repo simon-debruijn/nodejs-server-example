@@ -1,0 +1,9 @@
+UserRepository (interface)
+-> getUserById(id): User
+-> getUsers(): Array<User>
+-> addUser(...): void
+
+InMemoryUserRepository implementatie met een private list
+MongoDBUserRepository implementatie met een private db connectie
+
+AddUserRequestHandler(UserRepository) -> UserRepository.addUser()
