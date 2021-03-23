@@ -21,7 +21,7 @@ class InMemoryUserRepository implements RepositoryInterface<User> {
     return newInstances;
   };
 
-  findOneById = async (id: string): Promise<User> => {
+  findOneById = async (id: string): Promise<User | undefined> => {
     return await this._users.find((user) => user._id === id);
   };
 
@@ -34,31 +34,27 @@ class InMemoryUserRepository implements RepositoryInterface<User> {
     return foundUsers;
   };
 
-  deleteOneById = async (id: string): Promise<User> => {
+  deleteOneById = async (id: string): Promise<User | undefined> => {
     const foundUser = await this._users.find((user) => user._id === id);
-
-    if (!foundUser) {
-      throw new Error('Not found');
-    }
-
-    await this._users.filter((user) => user._id !== id);
-
+    this._users = await this._users.filter((user) => user._id !== id);
     return foundUser;
   };
 
   deleteManyByIds = async (ids: string[]): Promise<User[]> => {
     const updatedIdsSet = new Set(ids);
 
-    const oldUsers = this._users;
+    const oldUsers = [...this._users];
 
-    await this._users.filter((user) => !updatedIdsSet.has(user._id));
+    this._users = await this._users.filter(
+      (user) => !updatedIdsSet.has(user._id)
+    );
 
     return oldUsers.filter((user) => updatedIdsSet.has(user._id));
   };
 
   updateOneById = async (
     id: string,
-    properties: Partial<User>
+    properties: Partial<User | undefined>
   ): Promise<User> => {
     const foundUser = await this._users.find((user) => user._id === id);
 

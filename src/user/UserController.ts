@@ -11,9 +11,9 @@ class UserController {
 
   addUser = async (req: Request, res: Response) => {
     try {
-      const newUser = req.body;
-      await this._repository.addOne(newUser);
-      res.status(200).send({ newUser });
+      const user = req.body;
+      await this._repository.addOne(user);
+      res.status(200).send({ user });
     } catch (error) {
       console.log(error);
       res.status(500).send({ message: error.message });
@@ -35,6 +35,11 @@ class UserController {
     try {
       const { id } = req.params;
       const user = await this._repository.findOneById(id);
+
+      if (!user) {
+        return res.status(404).send({ message: 'User not found' });
+      }
+
       res.status(200).send({ user });
     } catch (error) {
       console.log(error);
@@ -47,10 +52,15 @@ class UserController {
       const { id } = req.params;
       const properties = req.body;
       const user = await this._repository.updateOneById(id, properties);
+
+      if (!user) {
+        return res.status(404).send({ message: 'User not found' });
+      }
+
       res.status(200).send({ user });
     } catch (error) {
       console.log(error);
-      res.status(404).send({ message: error.message });
+      res.status(500).send({ message: error.message });
     }
   };
 
@@ -58,6 +68,33 @@ class UserController {
     try {
       const { ids, properties } = req.body;
       const users = await this._repository.updateManyByIds(ids, properties);
+      res.status(200).send({ users });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ message: error.message });
+    }
+  };
+
+  deleteUserById = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const user = await this._repository.deleteOneById(id);
+
+      if (!user) {
+        return res.status(404).send({ message: 'User not found' });
+      }
+
+      res.status(200).send({ user });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ message: error.message });
+    }
+  };
+
+  deleteUsersByIds = async (req: Request, res: Response) => {
+    try {
+      const { ids } = req.body;
+      const users = await this._repository.deleteManyByIds(ids);
       res.status(200).send({ users });
     } catch (error) {
       console.log(error);
