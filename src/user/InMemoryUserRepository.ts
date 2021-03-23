@@ -55,12 +55,10 @@ class InMemoryUserRepository implements RepositoryInterface<User> {
   updateOneById = async (
     id: string,
     properties: Partial<User | undefined>
-  ): Promise<User> => {
+  ): Promise<User | undefined> => {
     const foundUser = await this._users.find((user) => user._id === id);
 
-    if (!foundUser) {
-      throw new Error('Not found');
-    }
+    if (!foundUser) return;
 
     const updatedUser = { ...foundUser, ...properties };
 
