@@ -4,8 +4,8 @@ const app = express();
 
 app.use(express.json());
 
-const userRouter = new UserRouter();
+const userRouter = new UserRouter().router;
 
-app.all('/users*', userRouter.router);
+app.all('/users*', userRouter);
 
 export default app;
