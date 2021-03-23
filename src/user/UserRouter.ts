@@ -10,16 +10,16 @@ class UserRouter {
     const userController = new UserController(userRepository);
     const userRouter = express.Router();
 
-    // GET
+    // CREATE
+    userRouter.post('/users', userController.addUser);
+
+    // READ
     userRouter.get('/users', userController.getUsers);
     userRouter.get('/users/:id', userController.getUserById);
 
-    // PUT
+    // UPDATE
     userRouter.put('/users', userController.updateUsersByIds);
     userRouter.put('/users/:id', userController.updateUserById);
-
-    // POST
-    userRouter.post('/users', userController.addUser);
 
     // DELETE
     userRouter.delete('/users', userController.deleteUsersByIds);
