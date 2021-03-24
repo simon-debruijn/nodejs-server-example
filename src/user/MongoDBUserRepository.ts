@@ -16,16 +16,19 @@ class MongoDBUserRepository implements RepositoryInterface<User> {
   find(properties: Partial<User>): Promise<User[]> {
     throw new Error('Method not implemented.');
   }
-  deleteOneById(id: string): Promise<void> {
+  deleteOneById(id: string): Promise<User | undefined> {
     throw new Error('Method not implemented.');
   }
-  deleteManyByIds(ids: string[]): Promise<void> {
+  deleteManyByIds(ids: string[]): Promise<User[]> {
     throw new Error('Method not implemented.');
   }
-  updateOneById(id: string, properties: Partial<User>): Promise<void> {
+  updateOneById(
+    id: string,
+    properties: Partial<User>
+  ): Promise<User | undefined> {
     throw new Error('Method not implemented.');
   }
-  updateManyByIds(ids: string[], properties: Partial<User>): Promise<void> {
+  updateManyByIds(ids: string[], properties: Partial<User>): Promise<User[]> {
     throw new Error('Method not implemented.');
   }
 }
