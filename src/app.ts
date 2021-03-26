@@ -15,10 +15,11 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.use(handleHttpException);
-app.use(handleNotFound);
-
 // routers
 app.use('/api/v1', v1Router);
+
+// middleware
+app.use(handleHttpException);
+app.use(handleNotFound);
 
 export default app;
