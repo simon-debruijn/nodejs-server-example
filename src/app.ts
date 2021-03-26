@@ -1,11 +1,19 @@
+import * as dotenv from 'dotenv';
 import express from 'express';
-import { UserRouter } from './user/UserRouter';
 const app = express();
+import cors from 'cors';
+import helmet from 'helmet';
 
+import { v1Router } from './api/v1/v1.router';
+
+dotenv.config();
+
+// middleware
+app.use(helmet());
+app.use(cors());
 app.use(express.json());
 
-const userRouter = new UserRouter().router;
-
-app.all('/users*', userRouter);
+// routers
+app.use('/api/v1', v1Router);
 
 export default app;

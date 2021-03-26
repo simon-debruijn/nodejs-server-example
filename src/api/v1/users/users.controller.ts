@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-import { RepositoryInterface } from '../repository/RepositoryInterface';
-import { User } from './User';
+import { ServiceInterface } from '../common/service.interface';
+import { User } from './user.interface';
 
-class UserController {
-  private _repository: RepositoryInterface<User>;
+class UsersController {
+  private _repository: ServiceInterface<User>;
 
-  constructor(repository: RepositoryInterface<User>) {
-    this._repository = repository;
+  constructor(Service: ServiceInterface<User>) {
+    this._repository = Service;
   }
 
   addUser = async (req: Request, res: Response) => {
@@ -37,6 +37,8 @@ class UserController {
       const user = await this._repository.findOneById(id);
 
       if (!user) {
+        console.log('HERE');
+
         return res.status(404).send({ message: 'User not found' });
       }
 
@@ -103,4 +105,4 @@ class UserController {
   };
 }
 
-export { UserController };
+export { UsersController };
