@@ -1,8 +1,8 @@
 import express from 'express';
-import { UsersInMemoryService } from './users.inMemory.service';
+import { UsersInMemoryRepository } from './users.inMemory.repository';
 import { UsersController } from './users.controller';
 
-const usersRepository = new UsersInMemoryService();
+const usersRepository = new UsersInMemoryRepository();
 const usersController = new UsersController(usersRepository);
 const usersRouter = express.Router();
 

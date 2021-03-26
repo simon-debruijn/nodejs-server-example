@@ -1,7 +1,7 @@
-import { ServiceInterface } from '../common/service.interface';
+import { Repository } from '../common/repository.interface';
 import { User } from './user.interface';
 
-class UsersInMemoryService implements ServiceInterface<User> {
+class UsersInMemoryRepository implements Repository<User> {
   private _users: User[] = [];
 
   addOne = async (newInstance: User): Promise<User> => {
@@ -78,4 +78,4 @@ class UsersInMemoryService implements ServiceInterface<User> {
   };
 }
 
-export { UsersInMemoryService };
+export { UsersInMemoryRepository };

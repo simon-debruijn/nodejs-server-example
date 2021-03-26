@@ -1,7 +1,7 @@
-import { ServiceInterface } from '../common/service.interface';
+import { Repository } from '../common/repository.interface';
 import { User } from './user.interface';
 
-class UsersMongoDBRepository implements ServiceInterface<User> {
+class UsersMongoDBRepository implements Repository<User> {
   addOne(newInstance: User): Promise<User> {
     throw new Error('Method not implemented.');
   }

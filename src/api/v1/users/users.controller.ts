@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-import { ServiceInterface } from '../common/service.interface';
+import { Repository } from '../common/repository.interface';
 import { User } from './user.interface';
 
 class UsersController {
-  private _repository: ServiceInterface<User>;
+  private _repository: Repository<User>;
 
-  constructor(Service: ServiceInterface<User>) {
-    this._repository = Service;
+  constructor(Repository: Repository<User>) {
+    this._repository = Repository;
   }
 
   addUser = async (req: Request, res: Response) => {
