@@ -13,7 +13,7 @@ class UsersController {
     try {
       const user = req.body;
       await this._repository.addOne(user);
-      res.status(200).send({ user });
+      res.status(201).send({ user });
     } catch (error) {
       console.log(error);
       res.status(500).send({ message: error.message });
