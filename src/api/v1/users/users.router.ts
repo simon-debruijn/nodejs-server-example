@@ -1,5 +1,5 @@
 import express from 'express';
-import { UsersInMemoryRepository } from './users.inMemory.repository';
+import { UsersInMemoryRepository } from './users.in-memory.repository';
 import { UsersController } from './users.controller';
 
 const usersRepository = new UsersInMemoryRepository();
