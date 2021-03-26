@@ -1,19 +1,17 @@
-import { RepositoryInterface } from '../repository/RepositoryInterface';
-import { User } from './User';
+import { ServiceInterface } from '../common/service.interface';
+import { User } from './user.interface';
 
-class MongoDBUserRepository implements RepositoryInterface<User> {
-  constructor() {}
-
+class UsersMongoDBRepository implements ServiceInterface<User> {
   addOne(newInstance: User): Promise<User> {
     throw new Error('Method not implemented.');
   }
   addMany(newInstances: User[]): Promise<User[]> {
     throw new Error('Method not implemented.');
   }
-  findOneById(id: string): Promise<User> {
+  findOneById(id: string): Promise<User | undefined> {
     throw new Error('Method not implemented.');
   }
-  find(properties: Partial<User>): Promise<User[]> {
+  find(properties?: Partial<User>): Promise<User[]> {
     throw new Error('Method not implemented.');
   }
   deleteOneById(id: string): Promise<User | undefined> {
@@ -33,4 +31,4 @@ class MongoDBUserRepository implements RepositoryInterface<User> {
   }
 }
 
-export { MongoDBUserRepository };
+export { UsersMongoDBRepository };

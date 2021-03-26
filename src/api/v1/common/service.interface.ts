@@ -1,4 +1,4 @@
-interface RepositoryInterface<T> {
+interface ServiceInterface<T> {
   addOne(newInstance: T): Promise<T>;
   addMany(newInstances: T[]): Promise<T[]>;
   findOneById(id: string): Promise<T | undefined>;
@@ -9,4 +9,4 @@ interface RepositoryInterface<T> {
   updateManyByIds(ids: string[], properties: Partial<T>): Promise<T[]>;
 }
 
-export { RepositoryInterface };
+export { ServiceInterface };

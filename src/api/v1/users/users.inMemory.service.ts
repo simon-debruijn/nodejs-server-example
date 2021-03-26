@@ -1,15 +1,8 @@
-import { RepositoryInterface } from '../repository/RepositoryInterface';
-import { User } from './User';
+import { ServiceInterface } from '../common/service.interface';
+import { User } from './user.interface';
 
-class InMemoryUserRepository implements RepositoryInterface<User> {
-  private _users: User[] = [
-    {
-      _id: '123',
-      name: 'Simon',
-      email: 'simon@gmail.com',
-      password: '123',
-    },
-  ];
+class UsersInMemoryService implements ServiceInterface<User> {
+  private _users: User[] = [];
 
   addOne = async (newInstance: User): Promise<User> => {
     await this._users.push(newInstance);
@@ -81,9 +74,8 @@ class InMemoryUserRepository implements RepositoryInterface<User> {
 
     this._users = newUsers;
 
-    // return newly updated users
     return newUsers.filter((user) => updatedIdsSet.has(user._id));
   };
 }
 
-export { InMemoryUserRepository };
+export { UsersInMemoryService };
