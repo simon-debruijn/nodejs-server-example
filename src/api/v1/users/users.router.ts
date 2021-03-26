@@ -10,15 +10,15 @@ const usersRouter = express.Router();
 usersRouter.post('/', usersController.addUser);
 
 // READ
-usersRouter.get('/:id', usersController.getUserById);
 usersRouter.get('/', usersController.getUsers);
+usersRouter.get('/:id', usersController.getUserById);
 
 // UPDATE
-usersRouter.patch('/:id', usersController.updateUserById);
 usersRouter.patch('/', usersController.updateUsersByIds);
+usersRouter.patch('/:id', usersController.updateUserById);
 
 // DELETE
-usersRouter.delete('/:id', usersController.deleteUserById);
 usersRouter.delete('/', usersController.deleteUsersByIds);
+usersRouter.delete('/:id', usersController.deleteUserById);
 
 export { usersRouter };
