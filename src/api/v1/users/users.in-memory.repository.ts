@@ -47,7 +47,7 @@ class UsersInMemoryRepository implements Repository<User> {
 
   updateOneById = async (
     id: string,
-    properties: Partial<User | undefined>
+    properties: Partial<User>
   ): Promise<User | undefined> => {
     const foundUser = await this._users.find((user) => user._id === id);
 
