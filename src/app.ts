@@ -1,6 +1,5 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
-const app = express();
 import cors from 'cors';
 import helmet from 'helmet';
 
@@ -9,6 +8,8 @@ import { handleHttpException } from './api/v1/middleware/handle-http-exception.m
 import { handleNotFound } from './api/v1/middleware/handle-not-found.middleware';
 
 dotenv.config();
+
+const app = express();
 
 // middleware
 app.use(helmet());
