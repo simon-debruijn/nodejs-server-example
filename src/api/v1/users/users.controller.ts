@@ -37,8 +37,6 @@ class UsersController {
       const user = await this._repository.findOneById(id);
 
       if (!user) {
-        console.log('HERE');
-
         return res.status(404).send({ message: 'User not found' });
       }
 
