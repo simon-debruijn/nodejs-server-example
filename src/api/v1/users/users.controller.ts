@@ -5,8 +5,8 @@ import { User } from './user.interface';
 class UsersController {
   private _repository: Repository<User>;
 
-  constructor(Repository: Repository<User>) {
-    this._repository = Repository;
+  constructor(repository: Repository<User>) {
+    this._repository = repository;
   }
 
   addUser = async (req: Request, res: Response) => {
