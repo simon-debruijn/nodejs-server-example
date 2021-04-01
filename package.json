@@ -8,6 +8,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^4.4.1",
+    "jsonwebtoken": "^8.5.1",
     "yup": "^0.32.9"
   },
   "devDependencies": {
@@ -15,6 +16,7 @@
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.11",
     "@types/helmet": "^4.0.0",
+    "@types/jsonwebtoken": "^8.5.1",
     "@types/node": "^14.14.36",
     "ts-node-dev": "^1.1.6",
     "tslint": "^5.20.1",
