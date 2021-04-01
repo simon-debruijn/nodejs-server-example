@@ -4,7 +4,7 @@ import { UsersInMemoryRepository } from '../users/users.in-memory.repository';
 import { TasksController } from './tasks.controller';
 import { TasksInMemoryRepository } from './tasks.in-memory.repository';
 
-const usersRepository = UsersInMemoryRepository.getInstance();
+const usersRepository = UsersInMemoryRepository.instance;
 const tasksRepository = new TasksInMemoryRepository();
 const tasksController = new TasksController(tasksRepository);
 const tasksRouter = express.Router();

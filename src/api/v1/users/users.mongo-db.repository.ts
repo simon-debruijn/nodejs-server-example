@@ -1,5 +1,6 @@
 import { Repository } from '../common/repository.interface';
-import { User } from './user.interface';
+import { SingletonFactory } from '../common/singleton.factory';
+import { User } from './user';
 
 class UsersMongoDBRepository implements Repository<User> {
   addOne(newInstance: User): Promise<User> {
@@ -31,4 +32,6 @@ class UsersMongoDBRepository implements Repository<User> {
   }
 }
 
-export { UsersMongoDBRepository };
+const singleton = SingletonFactory.createSingleton(UsersMongoDBRepository);
+
+export { singleton as UsersMongoDBRepository };

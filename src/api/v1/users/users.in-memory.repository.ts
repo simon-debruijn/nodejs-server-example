@@ -1,6 +1,6 @@
 import { Repository } from '../common/repository.interface';
-import { User } from './user.interface';
-
+import { SingletonFactory } from '../common/singleton.factory';
+import { User } from './user';
 class UsersInMemoryRepository implements Repository<User> {
   private _users: User[] = [];
 
@@ -78,4 +78,6 @@ class UsersInMemoryRepository implements Repository<User> {
   };
 }
 
-export { UsersInMemoryRepository };
+const singleton = SingletonFactory.createSingleton(UsersInMemoryRepository);
+
+export { singleton as UsersInMemoryRepository };
