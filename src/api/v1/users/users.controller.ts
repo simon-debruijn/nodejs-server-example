@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
+import { JwtProvider } from '../common/jwt.provider';
 import { Repository } from '../common/repository.interface';
-import { User } from './user.interface';
+import { User } from './user';
 
 class UsersController {
   private _repository: Repository<User>;
@@ -17,6 +18,27 @@ class UsersController {
     } catch (error) {
       console.log(error);
       res.status(500).send({ message: error.message });
+    }
+  };
+
+  loginUser = async (req: Request, res: Response) => {
+    try {
+      const { email, password } = req.body;
+      const users = await this._repository.find({ email, password });
+      const user = users?.[0];
+
+      if (!user) throw new Error();
+
+      const token = JwtProvider.generateAuthToken(user);
+
+      const updatedUser = await this._repository.updateOneById(user['_id'], {
+        tokens: [...(user.tokens ?? []), token],
+      });
+
+      res.status(200).send({ user: updatedUser, token });
+    } catch (error) {
+      console.log(error);
+      res.status(400).send();
     }
   };
 
