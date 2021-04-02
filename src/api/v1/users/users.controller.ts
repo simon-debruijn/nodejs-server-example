@@ -17,7 +17,7 @@ class UsersController {
       res.status(201).send({ user });
     } catch (error) {
       console.log(error);
-      res.status(500).send({ message: error.message });
+      res.status(500).send({ error: error.message });
     }
   };
 
@@ -49,7 +49,7 @@ class UsersController {
       res.status(200).send({ users });
     } catch (error) {
       console.log(error);
-      res.status(500).send({ message: error.message });
+      res.status(500).send({ error: error.message });
     }
   };
 
@@ -59,13 +59,13 @@ class UsersController {
       const user = await this._repository.findOneById(id);
 
       if (!user) {
-        return res.status(404).send({ message: 'User not found' });
+        return res.status(404).send({ error: 'User not found' });
       }
 
       res.status(200).send({ user });
     } catch (error) {
       console.log(error);
-      res.status(500).send({ message: error.message });
+      res.status(500).send({ error: error.message });
     }
   };
 
@@ -76,13 +76,13 @@ class UsersController {
       const user = await this._repository.updateOneById(id, properties);
 
       if (!user) {
-        return res.status(404).send({ message: 'User not found' });
+        return res.status(404).send({ error: 'User not found' });
       }
 
       res.status(200).send({ user });
     } catch (error) {
       console.log(error);
-      res.status(500).send({ message: error.message });
+      res.status(500).send({ error: error.message });
     }
   };
 
@@ -93,7 +93,7 @@ class UsersController {
       res.status(200).send({ users });
     } catch (error) {
       console.log(error);
-      res.status(500).send({ message: error.message });
+      res.status(500).send({ error: error.message });
     }
   };
 
@@ -103,13 +103,13 @@ class UsersController {
       const user = await this._repository.deleteOneById(id);
 
       if (!user) {
-        return res.status(404).send({ message: 'User not found' });
+        return res.status(404).send({ error: 'User not found' });
       }
 
       res.status(200).send({ user });
     } catch (error) {
       console.log(error);
-      res.status(500).send({ message: error.message });
+      res.status(500).send({ error: error.message });
     }
   };
 
@@ -120,7 +120,7 @@ class UsersController {
       res.status(200).send({ users });
     } catch (error) {
       console.log(error);
-      res.status(500).send({ message: error.message });
+      res.status(500).send({ error: error.message });
     }
   };
 }
