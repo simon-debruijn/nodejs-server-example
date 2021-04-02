@@ -10,14 +10,9 @@ class TasksController {
   }
 
   getTasks = async (req: Request, res: Response) => {
-    try {
-      const parameters = req.body;
-      const tasks = await this._repository.find(parameters);
-      res.status(200).send({ tasks });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: error.message });
-    }
+    const parameters = req.body;
+    const tasks = await this._repository.find(parameters);
+    res.status(200).send({ tasks });
   };
 }
 

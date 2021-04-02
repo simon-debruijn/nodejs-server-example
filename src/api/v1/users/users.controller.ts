@@ -12,125 +12,85 @@ class UsersController {
   }
 
   addUser = async (req: Request, res: Response) => {
-    try {
-      const user = req.body;
+    const user = req.body;
 
-      const { error } = (await this._repository.addOne(
-        user
-      )) as ValidationErrorResponse;
+    const { error } = (await this._repository.addOne(
+      user
+    )) as ValidationErrorResponse;
 
-      if (error) {
-        return res.status(400).send({ error });
-      }
-
-      res.status(201).send({ user });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: error.message });
+    if (error) {
+      return res.status(400).send({ error });
     }
+
+    res.status(201).send({ user });
   };
 
   loginUser = async (req: Request, res: Response) => {
-    try {
-      const { email, password } = req.body;
-      const users = await this._repository.find({ email, password });
-      const user = users?.[0];
+    const { email, password } = req.body;
+    const users = await this._repository.find({ email, password });
+    const user = users?.[0];
 
-      if (!user) throw new Error();
+    if (!user) throw new Error();
 
-      const token = JwtProvider.generateAuthToken(user);
+    const token = JwtProvider.generateAuthToken(user);
 
-      const updatedUser = await this._repository.updateOneById(user['_id'], {
-        tokens: [...(user.tokens ?? []), token],
-      });
+    const updatedUser = await this._repository.updateOneById(user['_id'], {
+      tokens: [...(user.tokens ?? []), token],
+    });
 
-      res.status(200).send({ user: updatedUser, token });
-    } catch (error) {
-      console.log(error);
-      res.status(400).send();
-    }
+    res.status(200).send({ user: updatedUser, token });
   };
 
   getUsers = async (req: Request, res: Response) => {
-    try {
-      const parameters = req.body;
-      const users = await this._repository.find(parameters);
-      res.status(200).send({ users });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: error.message });
-    }
+    const parameters = req.body;
+    const users = await this._repository.find(parameters);
+    res.status(200).send({ users });
   };
 
   getUserById = async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      const user = await this._repository.findOneById(id);
+    const { id } = req.params;
+    const user = await this._repository.findOneById(id);
 
-      if (!user) {
-        return res.status(404).send({ error: 'User not found' });
-      }
-
-      res.status(200).send({ user });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: error.message });
+    if (!user) {
+      return res.status(404).send({ error: 'User not found' });
     }
+
+    res.status(200).send({ user });
   };
 
   updateUserById = async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      const properties = req.body;
-      const user = await this._repository.updateOneById(id, properties);
+    const { id } = req.params;
+    const properties = req.body;
+    const user = await this._repository.updateOneById(id, properties);
 
-      if (!user) {
-        return res.status(404).send({ error: 'User not found' });
-      }
-
-      res.status(200).send({ user });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: error.message });
+    if (!user) {
+      return res.status(404).send({ error: 'User not found' });
     }
+
+    res.status(200).send({ user });
   };
 
   updateUsersByIds = async (req: Request, res: Response) => {
-    try {
-      const { ids, properties } = req.body;
-      const users = await this._repository.updateManyByIds(ids, properties);
-      res.status(200).send({ users });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: error.message });
-    }
+    const { ids, properties } = req.body;
+    const users = await this._repository.updateManyByIds(ids, properties);
+    res.status(200).send({ users });
   };
 
   deleteUserById = async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      const user = await this._repository.deleteOneById(id);
+    const { id } = req.params;
+    const user = await this._repository.deleteOneById(id);
 
-      if (!user) {
-        return res.status(404).send({ error: 'User not found' });
-      }
-
-      res.status(200).send({ user });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: error.message });
+    if (!user) {
+      return res.status(404).send({ error: 'User not found' });
     }
+
+    res.status(200).send({ user });
   };
 
   deleteUsersByIds = async (req: Request, res: Response) => {
-    try {
-      const { ids } = req.body;
-      const users = await this._repository.deleteManyByIds(ids);
-      res.status(200).send({ users });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: error.message });
-    }
+    const { ids } = req.body;
+    const users = await this._repository.deleteManyByIds(ids);
+    res.status(200).send({ users });
   };
 }
 
