@@ -1,10 +1,24 @@
 import { Repository } from '../common/repository.interface';
 import { SingletonFactory } from '../common/singleton.factory';
+import { ValidationErrorResponse } from '../common/validation-error-response.interface';
 import { User } from './user';
 class UsersInMemoryRepository implements Repository<User> {
   private _users: User[] = [];
 
-  addOne = async (newInstance: User): Promise<User> => {
+  addOne = async (
+    newInstance: User
+  ): Promise<User | ValidationErrorResponse> => {
+    const newUser = new User(
+      newInstance.name,
+      newInstance.email,
+      newInstance.password
+    );
+    const validationErrors = User.validate(newUser);
+
+    if (validationErrors.length > 0) {
+      return { error: validationErrors };
+    }
+
     await this._users.push(newInstance);
     return newInstance;
   };

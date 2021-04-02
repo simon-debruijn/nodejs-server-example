@@ -1,5 +1,8 @@
+import { ValidationError } from 'class-validator';
+import { ValidationErrorResponse } from './validation-error-response.interface';
+
 interface Repository<T> {
-  addOne(newInstance: T): Promise<T>;
+  addOne(newInstance: T): Promise<T | ValidationErrorResponse>;
   addMany(newInstances: T[]): Promise<T[]>;
   findOneById(id: string): Promise<T | undefined>;
   find(properties?: Partial<T>): Promise<T[]>;

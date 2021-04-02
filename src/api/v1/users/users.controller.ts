@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { JwtProvider } from '../common/jwt.provider';
 import { Repository } from '../common/repository.interface';
+import { ValidationErrorResponse } from '../common/validation-error-response.interface';
 import { User } from './user';
 
 class UsersController {
@@ -13,7 +14,15 @@ class UsersController {
   addUser = async (req: Request, res: Response) => {
     try {
       const user = req.body;
-      await this._repository.addOne(user);
+
+      const { error } = (await this._repository.addOne(
+        user
+      )) as ValidationErrorResponse;
+
+      if (error) {
+        return res.status(400).send({ error });
+      }
+
       res.status(201).send({ user });
     } catch (error) {
       console.log(error);
