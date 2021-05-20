@@ -1,8 +1,8 @@
 import express from 'express';
-import { UsersInMemoryRepository } from './users.in-memory.repository';
-import { UsersController } from './users.controller';
+import { UsersController } from './UsersController';
+import { UsersMongoDbRepository } from './UsersMongoDbRepository';
 
-const usersRepository = UsersInMemoryRepository.instance;
+const usersRepository = UsersMongoDbRepository.getInstance();
 const usersController = new UsersController(usersRepository);
 const usersRouter = express.Router();
 

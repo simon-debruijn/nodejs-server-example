@@ -1,8 +1,24 @@
-import { Repository } from '../common/repository.interface';
-import { SingletonFactory } from '../common/singleton.factory';
-import { User } from './user';
+import { Collection } from 'mongodb';
+import { Repository } from '../common/RepositoryInterface';
+import { MongoDbConnection } from '../db/mongo';
+import { User } from './User';
 
-class UsersMongoDBRepository implements Repository<User> {
+class UsersMongoDbRepository implements Repository<User> {
+  private static _instance;
+
+  private _users: Collection;
+
+  private constructor(collection: Collection) {
+    this._users = collection;
+  }
+
+  static getInstance = (): UsersMongoDbRepository => {
+    if (!UsersMongoDbRepository._instance) {
+      UsersMongoDbRepository._instance = new UsersMongoDbRepository();
+    }
+    return UsersMongoDbRepository._instance;
+  };
+
   addOne(newInstance: User): Promise<User> {
     throw new Error('Method not implemented.');
   }
@@ -12,9 +28,9 @@ class UsersMongoDBRepository implements Repository<User> {
   findOneById(id: string): Promise<User | undefined> {
     throw new Error('Method not implemented.');
   }
-  find(properties?: Partial<User>): Promise<User[]> {
-    throw new Error('Method not implemented.');
-  }
+  find = async (properties?: Partial<User>): Promise<User[]> => {
+    return await this._users.find(properties).toArray();
+  };
   deleteOneById(id: string): Promise<User | undefined> {
     throw new Error('Method not implemented.');
   }
@@ -32,6 +48,4 @@ class UsersMongoDBRepository implements Repository<User> {
   }
 }
 
-const singleton = SingletonFactory.createSingleton(UsersMongoDBRepository);
-
-export { singleton as UsersMongoDBRepository };
+export { UsersMongoDbRepository };

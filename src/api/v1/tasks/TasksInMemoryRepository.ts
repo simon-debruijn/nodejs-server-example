@@ -1,5 +1,5 @@
-import { Repository } from '../common/repository.interface';
-import { Task } from './task.interface';
+import { Repository } from '../common/RepositoryInterface';
+import { Task } from './TaskInterface';
 
 class TasksInMemoryRepository implements Repository<Task> {
   private _tasks: Task[] = [

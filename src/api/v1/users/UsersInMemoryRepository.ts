@@ -1,7 +1,7 @@
-import { Repository } from '../common/repository.interface';
-import { SingletonFactory } from '../common/singleton.factory';
-import { ValidationErrorResponse } from '../common/validation-error-response.interface';
-import { User } from './user';
+import { Repository } from '../common/RepositoryInterface';
+import { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
+import { User } from './User';
+
 class UsersInMemoryRepository implements Repository<User> {
   private _users: User[] = [];
 
@@ -91,7 +91,4 @@ class UsersInMemoryRepository implements Repository<User> {
     return newUsers.filter((user) => updatedIdsSet.has(user._id));
   };
 }
-
-const singleton = SingletonFactory.createSingleton(UsersInMemoryRepository);
-
-export { singleton as UsersInMemoryRepository };
+export { UsersInMemoryRepository };

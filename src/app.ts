@@ -3,11 +3,14 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 
-import { v1Router } from './api/v1/v1.router';
-import { handleHttpException } from './api/v1/middleware/handle-http-exception.middleware';
-import { handleNotFound } from './api/v1/middleware/handle-not-found.middleware';
+import { v1Router } from './api/v1/v1Router';
+import { handleHttpException } from './api/v1/middleware/handleHttpException';
+import { handleNotFound } from './api/v1/middleware/handleNotFound';
+import { initializeMongoDb } from './api/v1/db/mongo';
 
 dotenv.config();
+
+await initializeMongoDb();
 
 const app = express();
 

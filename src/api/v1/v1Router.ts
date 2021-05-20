@@ -1,6 +1,6 @@
 import express from 'express';
-import { tasksRouter } from './tasks/tasks.router';
-import { usersRouter } from './users/users.router';
+import { tasksRouter } from './tasks/TasksRouter';
+import { usersRouter } from './users/UsersRouter';
 
 const v1Router = express.Router();
 

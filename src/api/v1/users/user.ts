@@ -37,4 +37,14 @@ class User {
   };
 }
 
-export { User };
+const isUser = (value: any): value is User => {
+  return (
+    typeof value === 'object' &&
+    value._id &&
+    value.name &&
+    value.email &&
+    value.password
+  );
+};
+
+export { User, isUser };

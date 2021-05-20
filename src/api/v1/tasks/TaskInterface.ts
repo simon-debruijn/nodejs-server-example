@@ -4,4 +4,4 @@ interface Task {
   completed: boolean;
 }
 
-export { Task };
+export type { Task };

@@ -1,5 +1,4 @@
-import { ValidationError } from 'class-validator';
-import { ValidationErrorResponse } from './validation-error-response.interface';
+import { ValidationErrorResponse } from './ValidationErrorResponseInterface';
 
 interface Repository<T> {
   addOne(newInstance: T): Promise<T | ValidationErrorResponse>;
@@ -12,4 +11,4 @@ interface Repository<T> {
   updateManyByIds(ids: string[], properties: Partial<T>): Promise<T[]>;
 }
 
-export { Repository };
+export type { Repository };
