@@ -10,7 +10,7 @@ import { initializeMongoDb } from './api/v1/db/mongo';
 
 dotenv.config();
 
-await initializeMongoDb();
+initializeMongoDb();
 
 const app = express();
 

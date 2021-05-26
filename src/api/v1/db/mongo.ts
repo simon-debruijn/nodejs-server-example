@@ -19,13 +19,8 @@ class MongoDbConnection {
     }
   };
 
-  static getCollection = async (name: string): Promise<Collection> => {
-    let collection = MongoDbConnection._db?.collection(name);
-
-    if (!collection) {
-      collection = await MongoDbConnection._db?.createCollection('users');
-    }
-    return collection;
+  static getCollection = (name: string): Collection => {
+    return MongoDbConnection._db?.collection(name);
   };
 }
 

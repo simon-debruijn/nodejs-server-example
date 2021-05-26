@@ -1,18 +1,19 @@
 import { Collection } from 'mongodb';
 import { Repository } from '../common/RepositoryInterface';
-import { MongoDbConnection } from '../db/mongo';
 import { User } from './User';
+import { MongoDbConnection } from '../db/mongo';
 
 class UsersMongoDbRepository implements Repository<User> {
-  private static _instance;
+  private static _instance: UsersMongoDbRepository;
 
-  private _users: Collection;
+  private _users: Collection<User>;
 
-  private constructor(collection: Collection) {
+  private constructor() {
+    const collection = MongoDbConnection.getCollection('users');
     this._users = collection;
   }
 
-  static getInstance = (): UsersMongoDbRepository => {
+  static getInstance = () => {
     if (!UsersMongoDbRepository._instance) {
       UsersMongoDbRepository._instance = new UsersMongoDbRepository();
     }

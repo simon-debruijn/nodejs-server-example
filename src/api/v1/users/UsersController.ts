@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { JwtProvider } from '../common/JwtProvider';
 import { Repository } from '../common/RepositoryInterface';
-import { isValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
 import { User } from './User';
 
 class UsersController {
