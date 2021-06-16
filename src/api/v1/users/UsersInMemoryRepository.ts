@@ -5,16 +5,9 @@ import { User } from './User';
 class UsersInMemoryRepository implements Repository<User> {
   private _users: User[] = [];
 
-  private static _instance: UsersInMemoryRepository;
-
   private constructor() {}
 
-  static getInstance = () => {
-    if (!UsersInMemoryRepository._instance) {
-      UsersInMemoryRepository._instance = new UsersInMemoryRepository();
-    }
-    return UsersInMemoryRepository._instance;
-  };
+  static instance: UsersInMemoryRepository = new UsersInMemoryRepository();
 
   addOne = async (
     newInstance: User

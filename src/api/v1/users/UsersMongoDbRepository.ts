@@ -4,8 +4,6 @@ import { User } from './User';
 import { MongoDbConnection } from '../db/mongo';
 
 class UsersMongoDbRepository implements Repository<User> {
-  private static _instance: UsersMongoDbRepository;
-
   private _users: Collection<User>;
 
   private constructor() {
@@ -13,12 +11,7 @@ class UsersMongoDbRepository implements Repository<User> {
     this._users = collection;
   }
 
-  static getInstance = () => {
-    if (!UsersMongoDbRepository._instance) {
-      UsersMongoDbRepository._instance = new UsersMongoDbRepository();
-    }
-    return UsersMongoDbRepository._instance;
-  };
+  static instance: UsersMongoDbRepository = new UsersMongoDbRepository();
 
   addOne(newInstance: User): Promise<User> {
     throw new Error('Method not implemented.');

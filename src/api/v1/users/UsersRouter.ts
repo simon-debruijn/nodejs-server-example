@@ -2,7 +2,7 @@ import express from 'express';
 import { UsersController } from './UsersController';
 import { UsersInMemoryRepository } from './UsersInMemoryRepository';
 
-const usersRepository = UsersInMemoryRepository.getInstance();
+const usersRepository = UsersInMemoryRepository.instance;
 const usersController = new UsersController(usersRepository);
 const usersRouter = express.Router();
 
