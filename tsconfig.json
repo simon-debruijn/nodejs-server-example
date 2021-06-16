@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
-    "module": "ESNext",
+    "module": "CommonJS",
     "esModuleInterop": true,
-    "target": "ESNext",
+    "target": "ES5",
     "moduleResolution": "node",
-    "sourceMap": true,
+    "sourceMap": false,
     "outDir": "dist",
     "strictNullChecks": true,
     "strictFunctionTypes": false
   },
-  "lib": ["es2015"]
+  "lib": ["esNext"]
 }
