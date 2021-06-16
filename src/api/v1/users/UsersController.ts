@@ -27,7 +27,9 @@ class UsersController {
     const users = await this._repository.find({ email, password });
     const user = users?.[0];
 
-    if (!user) throw new Error();
+    if (!user) {
+      return res.status(400).send();
+    }
 
     const token = JwtProvider.generateAuthToken(user);
 
