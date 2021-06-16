@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Repository } from '../common/RepositoryInterface';
 import { isUser, User } from '../users/User';
-import jwt, { Secret } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 const handleAuthorization =
   (repository: Repository<User>) =>
