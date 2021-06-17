@@ -1,10 +1,10 @@
-import { Collection, Db, MongoClient } from 'mongodb';
+import { Db, MongoClient } from 'mongodb';
 
 class MongoDbConnection {
   private static _db: Db;
 
   static initialize = async (url: string, dbName: string) => {
-    const client: MongoClient = new MongoClient(url, {
+    const client = new MongoClient(url, {
       useUnifiedTopology: true,
     });
 
@@ -19,8 +19,8 @@ class MongoDbConnection {
     }
   };
 
-  static getCollection = (name: string): Collection => {
-    return MongoDbConnection._db?.collection(name);
+  static getCollection = (name: string) => {
+    return MongoDbConnection._db.collection(name);
   };
 }
 
