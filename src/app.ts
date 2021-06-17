@@ -26,4 +26,4 @@ app.use('/api/v1', v1Router);
 app.use(handleHttpException);
 app.use(handleNotFound);
 
-export default app;
+export { app };

@@ -10,30 +10,37 @@ class UsersInMemoryRepository implements Repository<User> {
   static instance: UsersInMemoryRepository = new UsersInMemoryRepository();
 
   addOne = async (
-    newInstance: User
+    newInstance: any
   ): Promise<User | ValidationErrorResponse> => {
-    const newUser = new User(
-      newInstance.name,
-      newInstance.email,
-      newInstance.password
-    );
+    const newUser = new User(newInstance);
     const validationErrors = User.validate(newUser);
 
     if (validationErrors.length > 0) {
       return { error: validationErrors };
     }
 
-    await this._users.push(newInstance);
+    this._users.push(newInstance);
     return newInstance;
   };
 
-  addMany = async (newInstances: User[]): Promise<User[]> => {
-    await this._users.push(...newInstances);
+  addMany = async (
+    newInstances: any[]
+  ): Promise<User[] | ValidationErrorResponse> => {
+    const newUsers = newInstances.map((newInstance) => new User(newInstance));
+    const validationErrors = newUsers.reduce((previous, current) => {
+      return [...previous, ...User.validate(current)];
+    }, []);
+
+    if (validationErrors.length > 0) {
+      return { error: validationErrors };
+    }
+
+    this._users.push(...newInstances);
     return newInstances;
   };
 
   findOneById = async (id: string): Promise<User | undefined> => {
-    return await this._users.find((user) => user._id === id);
+    return this._users.find((user) => user._id === id);
   };
 
   find = async (properties: Partial<User> = {}): Promise<User[]> => {
@@ -46,28 +53,26 @@ class UsersInMemoryRepository implements Repository<User> {
   };
 
   deleteOneById = async (id: string): Promise<User | undefined> => {
-    const foundUser = await this._users.find((user) => user._id === id);
-    this._users = await this._users.filter((user) => user._id !== id);
+    const foundUser = this._users.find((user) => user._id === id);
+    this._users = this._users.filter((user) => user._id !== id);
     return foundUser;
   };
 
-  deleteManyByIds = async (ids: string[]): Promise<User[]> => {
-    const updatedIdsSet = new Set(ids);
+  deleteManyByIds = async (ids: string[]): Promise<string> => {
+    const deletedIdsSet = new Set(ids);
 
-    const oldUsers = [...this._users];
+    this._users = this._users.filter((user) => !deletedIdsSet.has(user._id));
 
-    this._users = await this._users.filter(
-      (user) => !updatedIdsSet.has(user._id)
-    );
+    const deletedCount = deletedIdsSet.size;
 
-    return oldUsers.filter((user) => updatedIdsSet.has(user._id));
+    return `${deletedCount} users were deleted`;
   };
 
   updateOneById = async (
     id: string,
     properties: Partial<User>
   ): Promise<User | undefined> => {
-    const foundUser = await this._users.find((user) => user._id === id);
+    const foundUser = this._users.find((user) => user._id === id);
 
     if (!foundUser) return;
 
@@ -83,16 +88,16 @@ class UsersInMemoryRepository implements Repository<User> {
   updateManyByIds = async (
     ids: string[],
     properties: Partial<User>
-  ): Promise<User[]> => {
+  ): Promise<string> => {
     const updatedIdsSet = new Set(ids);
 
-    const newUsers = await this._users.map((user) =>
+    const newUsers = this._users.map((user) =>
       ids.includes(user._id) ? { ...user, ...properties } : user
     );
 
     this._users = newUsers;
 
-    return newUsers.filter((user) => updatedIdsSet.has(user._id));
+    return `${updatedIdsSet.size} users have been updated`;
   };
 }
 export { UsersInMemoryRepository };

@@ -71,8 +71,11 @@ class UsersController {
 
   updateUsersByIds = async (req: Request, res: Response) => {
     const { ids, properties } = req.body;
-    const users = await this._repository.updateManyByIds(ids, properties);
-    res.status(200).send({ users });
+    const statusMessage = await this._repository.updateManyByIds(
+      ids,
+      properties
+    );
+    res.status(200).send(statusMessage);
   };
 
   deleteUserById = async (req: Request, res: Response) => {
@@ -88,8 +91,8 @@ class UsersController {
 
   deleteUsersByIds = async (req: Request, res: Response) => {
     const { ids } = req.body;
-    const users = await this._repository.deleteManyByIds(ids);
-    res.status(200).send({ users });
+    const statusMessage = await this._repository.deleteManyByIds(ids);
+    res.status(200).send(statusMessage);
   };
 }
 

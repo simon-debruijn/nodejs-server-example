@@ -52,8 +52,11 @@ class TasksController {
 
   updateTasksByIds = async (req: Request, res: Response) => {
     const { ids, properties } = req.body;
-    const tasks = await this._repository.updateManyByIds(ids, properties);
-    res.status(200).send({ tasks });
+    const statusMessage = await this._repository.updateManyByIds(
+      ids,
+      properties
+    );
+    res.status(200).send(statusMessage);
   };
 
   deleteTaskById = async (req: Request, res: Response) => {
@@ -69,8 +72,8 @@ class TasksController {
 
   deleteTasksByIds = async (req: Request, res: Response) => {
     const { ids } = req.body;
-    const tasks = await this._repository.deleteManyByIds(ids);
-    res.status(200).send({ tasks });
+    const statusMessage = await this._repository.deleteManyByIds(ids);
+    res.status(200).send(statusMessage);
   };
 }
 

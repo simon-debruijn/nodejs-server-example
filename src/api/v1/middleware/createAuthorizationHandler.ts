@@ -3,7 +3,7 @@ import { Repository } from '../common/RepositoryInterface';
 import { isUser, User } from '../users/User';
 import jwt from 'jsonwebtoken';
 
-const handleAuthorization =
+const createAuthorizationHandler =
   (repository: Repository<User>) =>
   async (
     req: Request & { token: string; user: User },
@@ -48,4 +48,4 @@ const handleAuthorization =
     }
   };
 
-export { handleAuthorization };
+export { createAuthorizationHandler };

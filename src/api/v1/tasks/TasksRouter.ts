@@ -1,17 +1,20 @@
 import express from 'express';
-import { handleAuthorization } from '../middleware/handleAuthorization';
-import { UsersMongoDbRepository } from '../users/UsersMongoDbRepository';
+import { TasksMongoDbRepository } from '../tasks/TasksMongoDbRepository';
 import { TasksController } from './TasksController';
-import { TasksInMemoryRepository } from './TasksInMemoryRepository';
 
-const usersMongoDbRepository = UsersMongoDbRepository.instance;
-const tasksRepository = TasksInMemoryRepository.instance;
+const tasksRepository = TasksMongoDbRepository.instance;
 const tasksController = new TasksController(tasksRepository);
 const tasksRouter = express.Router();
 
-// middleware
-const auth = handleAuthorization(usersMongoDbRepository);
+tasksRouter.post('/', tasksController.addTask);
 
-tasksRouter.get('/', auth, tasksController.getTasks);
+tasksRouter.get('/', tasksController.getTasks);
+tasksRouter.get('/:id', tasksController.getTaskById);
+
+tasksRouter.patch('/', tasksController.updateTasksByIds);
+tasksRouter.patch('/:id', tasksController.updateTaskById);
+
+tasksRouter.delete('/', tasksController.deleteTasksByIds);
+tasksRouter.delete('/:id', tasksController.deleteTaskById);
 
 export { tasksRouter };

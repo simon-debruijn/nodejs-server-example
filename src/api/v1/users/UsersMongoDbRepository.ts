@@ -2,6 +2,7 @@ import { Collection } from 'mongodb';
 import { Repository } from '../common/RepositoryInterface';
 import { User } from './User';
 import { MongoDbConnection } from '../db/mongo';
+import { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
 
 class UsersMongoDbRepository implements Repository<User> {
   private _users: Collection<User>;
@@ -13,32 +14,80 @@ class UsersMongoDbRepository implements Repository<User> {
 
   static instance: UsersMongoDbRepository = new UsersMongoDbRepository();
 
-  addOne(newInstance: User): Promise<User> {
-    throw new Error('Method not implemented.');
+  async addOne(newInstance: any): Promise<User | ValidationErrorResponse> {
+    const newUser = new User(newInstance);
+    const validationErrors = User.validate(newUser);
+
+    if (validationErrors.length > 0) {
+      return { error: validationErrors };
+    }
+
+    await this._users.insertOne(newUser);
+    return newUser;
   }
-  addMany(newInstances: User[]): Promise<User[]> {
-    throw new Error('Method not implemented.');
+
+  async addMany(
+    newInstances: any[]
+  ): Promise<User[] | ValidationErrorResponse> {
+    const newUsers = newInstances.map((newInstance) => new User(newInstance));
+    const validationErrors = newUsers.reduce((previous, current) => {
+      return [...previous, ...User.validate(current)];
+    }, []);
+
+    if (validationErrors.length > 0) {
+      return { error: validationErrors };
+    }
+
+    await this._users.insertMany(newUsers);
+    return newUsers;
   }
-  findOneById(id: string): Promise<User | undefined> {
-    throw new Error('Method not implemented.');
+
+  async findOneById(id: string): Promise<User | undefined> {
+    return (await this._users.findOne({ _id: id })) ?? undefined;
   }
-  find = async (properties?: Partial<User>): Promise<User[]> => {
+
+  async find(properties?: Partial<User>): Promise<User[]> {
     return await this._users.find(properties).toArray();
-  };
-  deleteOneById(id: string): Promise<User | undefined> {
-    throw new Error('Method not implemented.');
   }
-  deleteManyByIds(ids: string[]): Promise<User[]> {
-    throw new Error('Method not implemented.');
+
+  async deleteOneById(id: string): Promise<User | undefined> {
+    return (await this._users.findOneAndDelete({ _id: id })).value;
   }
-  updateOneById(
+
+  async deleteManyByIds(ids: string[]): Promise<string> {
+    const { deletedCount } = await this._users.deleteMany({
+      _id: { $nin: ids },
+    });
+    return `${deletedCount} users were deleted`;
+  }
+
+  async updateOneById(
     id: string,
     properties: Partial<User>
   ): Promise<User | undefined> {
-    throw new Error('Method not implemented.');
+    const foundUser = await this._users.findOne({ _id: id });
+
+    if (!foundUser) {
+      throw new Error('User not found');
+    }
+
+    return (
+      await this._users.findOneAndUpdate(
+        { _id: id },
+        { ...foundUser, ...properties }
+      )
+    ).value;
   }
-  updateManyByIds(ids: string[], properties: Partial<User>): Promise<User[]> {
-    throw new Error('Method not implemented.');
+
+  async updateManyByIds(
+    ids: string[],
+    properties: Partial<User>
+  ): Promise<string> {
+    const { modifiedCount } = await this._users.updateMany(
+      { _id: { $nin: ids } },
+      properties
+    );
+    return `${modifiedCount} users were updated`;
   }
 }
 

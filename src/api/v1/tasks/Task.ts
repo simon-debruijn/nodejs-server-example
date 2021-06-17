@@ -17,7 +17,13 @@ class Task {
   @IsBoolean()
   completed: boolean;
 
-  constructor(description: string, completed?: boolean) {
+  constructor({
+    description,
+    completed,
+  }: {
+    description: string;
+    completed?: boolean;
+  }) {
     this._id = Math.random().toString();
     this.description = description;
     this.completed = completed ?? false;

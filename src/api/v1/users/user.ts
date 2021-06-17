@@ -25,7 +25,15 @@ class User {
 
   tokens: string[] = [];
 
-  constructor(name: string, email: string, password: string) {
+  constructor({
+    name,
+    email,
+    password,
+  }: {
+    name: string;
+    email: string;
+    password: string;
+  }) {
     this._id = Math.random().toString();
     this.name = name;
     this.email = email;
