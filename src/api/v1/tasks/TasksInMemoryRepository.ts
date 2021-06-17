@@ -12,24 +12,24 @@ class TasksInMemoryRepository implements Repository<Task> {
   addOne = async (
     newInstance: Task
   ): Promise<Task | ValidationErrorResponse> => {
-    const newTask = new Task(newInstance.description, newInstance.completed);
+    const newTask = new Task(newInstance);
     const validationErrors = Task.validate(newTask);
 
     if (validationErrors.length > 0) {
       return { error: validationErrors };
     }
 
-    await this._tasks.push(newInstance);
+    this._tasks.push(newInstance);
     return newInstance;
   };
 
   addMany = async (newInstances: Task[]): Promise<Task[]> => {
-    await this._tasks.push(...newInstances);
+    this._tasks.push(...newInstances);
     return newInstances;
   };
 
   findOneById = async (id: string): Promise<Task | undefined> => {
-    return await this._tasks.find((task) => task._id === id);
+    return this._tasks.find((task) => task._id === id);
   };
 
   find = async (properties: Partial<Task> = {}): Promise<Task[]> => {
@@ -42,28 +42,24 @@ class TasksInMemoryRepository implements Repository<Task> {
   };
 
   deleteOneById = async (id: string): Promise<Task | undefined> => {
-    const foundTask = await this._tasks.find((task) => task._id === id);
-    this._tasks = await this._tasks.filter((task) => task._id !== id);
+    const foundTask = this._tasks.find((task) => task._id === id);
+    this._tasks = this._tasks.filter((task) => task._id !== id);
     return foundTask;
   };
 
-  deleteManyByIds = async (ids: string[]): Promise<Task[]> => {
-    const updatedIdsSet = new Set(ids);
+  deleteManyByIds = async (ids: string[]): Promise<string> => {
+    const deletedIdsSet = new Set(ids);
 
-    const oldTasks = [...this._tasks];
+    this._tasks = this._tasks.filter((task) => !deletedIdsSet.has(task._id));
 
-    this._tasks = await this._tasks.filter(
-      (task) => !updatedIdsSet.has(task._id)
-    );
-
-    return oldTasks.filter((task) => updatedIdsSet.has(task._id));
+    return `${deletedIdsSet.size} tasks were deleted`;
   };
 
   updateOneById = async (
     id: string,
     properties: Partial<Task>
   ): Promise<Task | undefined> => {
-    const foundTask = await this._tasks.find((task) => task._id === id);
+    const foundTask = this._tasks.find((task) => task._id === id);
 
     if (!foundTask) return;
 
@@ -79,16 +75,16 @@ class TasksInMemoryRepository implements Repository<Task> {
   updateManyByIds = async (
     ids: string[],
     properties: Partial<Task>
-  ): Promise<Task[]> => {
+  ): Promise<string> => {
     const updatedIdsSet = new Set(ids);
 
-    const newTasks = await this._tasks.map((task) =>
+    const newTasks = this._tasks.map((task) =>
       ids.includes(task._id) ? { ...task, ...properties } : task
     );
 
     this._tasks = newTasks;
 
-    return newTasks.filter((task) => updatedIdsSet.has(task._id));
+    return `${updatedIdsSet} tasks were updated`;
   };
 }
 
