@@ -1,8 +1,8 @@
 import { ValidationErrorResponse } from './ValidationErrorResponseInterface';
 
 interface Repository<T> {
-  addOne(newInstance: any): Promise<T | ValidationErrorResponse>;
-  addMany(newInstances: any[]): Promise<T[] | ValidationErrorResponse>;
+  addOne(newInstance: unknown): Promise<T | ValidationErrorResponse>;
+  addMany(newInstances: unknown[]): Promise<T[] | ValidationErrorResponse>;
   findOneById(id: string): Promise<T | undefined>;
   find(properties?: Partial<T>): Promise<T[]>;
   deleteOneById(id: string): Promise<T | undefined>;
