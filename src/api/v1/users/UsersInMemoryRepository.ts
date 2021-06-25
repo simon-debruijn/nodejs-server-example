@@ -9,10 +9,10 @@ class UsersInMemoryRepository implements Repository<User> {
   private constructor() {}
 
   static getInstance() {
-    if (this._instance) {
-      return this._instance;
+    if (!this._instance) {
+      this._instance = new UsersInMemoryRepository();
     }
-    return new UsersInMemoryRepository();
+    return this._instance;
   }
 
   async addOne(newInstance: any): Promise<User | ValidationErrorResponse> {

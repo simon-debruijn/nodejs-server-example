@@ -8,16 +8,16 @@ class UsersMongoDbRepository implements Repository<User> {
   private static _instance: UsersMongoDbRepository;
   private _users: Collection<User>;
 
-  private constructor() {
-    const collection = MongoDbConnection.getInstance().getCollection('users');
+  private constructor(mongoDbConnection: MongoDbConnection) {
+    const collection = mongoDbConnection.getCollection('users');
     this._users = collection;
   }
 
-  static getInstance() {
-    if (this._instance) {
-      return this._instance;
+  static getInstance(mongoDbConnection: MongoDbConnection) {
+    if (!this._instance) {
+      this._instance = new UsersMongoDbRepository(mongoDbConnection);
     }
-    return new UsersMongoDbRepository();
+    return this._instance;
   }
 
   async addOne(newInstance: any): Promise<User | ValidationErrorResponse> {

@@ -9,10 +9,10 @@ class TasksInMemoryRepository implements Repository<Task> {
   private constructor() {}
 
   static getInstance() {
-    if (this._instance) {
-      return this._instance;
+    if (!this._instance) {
+      this._instance = new TasksInMemoryRepository();
     }
-    return new TasksInMemoryRepository();
+    return this._instance;
   }
 
   async addOne(newInstance: Task): Promise<Task | ValidationErrorResponse> {

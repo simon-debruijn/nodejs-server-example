@@ -8,20 +8,17 @@ class TasksMongoDbRepository implements Repository<Task> {
   private static _instance: TasksMongoDbRepository;
   private _tasks: Collection<Task>;
 
-  private constructor() {
-    const collection = MongoDbConnection.getInstance().getCollection('tasks');
+  private constructor(mongoDbConnection: MongoDbConnection) {
+    const collection = mongoDbConnection.getCollection('tasks');
+
     this._tasks = collection;
   }
 
-  getInstance(): TasksMongoDbRepository {
-    throw new Error('Method not implemented.');
-  }
-
-  static getInstance() {
-    if (this._instance) {
-      return this._instance;
+  static getInstance(mongoDbConnection: MongoDbConnection) {
+    if (!this._instance) {
+      this._instance = new TasksMongoDbRepository(mongoDbConnection);
     }
-    return new TasksMongoDbRepository();
+    return this._instance;
   }
 
   async addOne(newInstance: any): Promise<Task | ValidationErrorResponse> {

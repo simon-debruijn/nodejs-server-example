@@ -5,8 +5,8 @@ class MongoDbConnection {
   private _client: MongoClient;
   private _db: Db;
 
-  private constructor(url: string, dbName: string) {
-    const client = new MongoClient(url, {
+  private constructor(uri: string, dbName: string) {
+    const client = new MongoClient(uri, {
       useUnifiedTopology: true,
     });
 
@@ -14,23 +14,25 @@ class MongoDbConnection {
       .connect()
       .then((connectedClient) => {
         this._client = connectedClient;
-        this._db = this._db = this._client.db(dbName);
+
+        this._db = this._client.db(dbName);
       })
-      .catch((error) => console.error(error))
+      .catch((error) => {
+        console.error(error);
+      })
       .finally(() => {
-        client.close();
+        // client.close();
       });
   }
 
   static getInstance() {
-    if (this._instance) {
-      return this._instance;
+    if (!this._instance) {
+      this._instance = new MongoDbConnection(
+        `${process.env.MONGODB_URL}`,
+        `${process.env.MONGODB_DB_NAME}`
+      );
     }
-
-    return new MongoDbConnection(
-      process.env.MONGODB_URL ?? '',
-      process.env.MONGODB_DB_NAME ?? ''
-    );
+    return this._instance;
   }
 
   isConnected() {
@@ -38,7 +40,7 @@ class MongoDbConnection {
   }
 
   getCollection(name: string) {
-    return this._db.collection(name);
+    return this._db?.collection(name);
   }
 }
 
