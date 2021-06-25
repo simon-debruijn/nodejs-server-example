@@ -21,6 +21,9 @@
     "@types/jsonwebtoken": "^8.5.1",
     "@types/mongodb": "^3.6.11",
     "@types/node": "^14.14.36",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "eslint": "^7.29.0",
     "prettier": "^2.3.0",
     "ts-node-dev": "^1.1.6",
     "tslint": "^5.20.1",
@@ -30,6 +33,7 @@
     "start": "tsc && node dist/index.js",
     "dev": "ts-node-dev src/index.ts",
     "format": "prettier . --write --ignore-path ./.gitignore",
+    "lint": "eslint . --fix --ignore-path ./.gitignore",
     "types:check": "tsc --noEmit"
   },
   "keywords": [],
