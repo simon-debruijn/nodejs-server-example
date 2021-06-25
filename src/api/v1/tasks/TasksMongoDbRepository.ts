@@ -67,9 +67,7 @@ class TasksMongoDbRepository implements Repository<Task> {
   ): Promise<Task | undefined> {
     const foundTask = await this._tasks.findOne({ _id: id });
 
-    if (!foundTask) {
-      throw new Error('Task not found');
-    }
+    if (!foundTask) return undefined;
 
     return (
       await this._tasks.findOneAndUpdate(

@@ -67,9 +67,7 @@ class UsersMongoDbRepository implements Repository<User> {
   ): Promise<User | undefined> {
     const foundUser = await this._users.findOne({ _id: id });
 
-    if (!foundUser) {
-      throw new Error('User not found');
-    }
+    if (!foundUser) return undefined;
 
     return (
       await this._users.findOneAndUpdate(
