@@ -40,9 +40,9 @@ class User {
     this.password = password;
   }
 
-  static validate = (user: User): ValidationError[] => {
+  static validate(user: User): ValidationError[] {
     return validateSync(user);
-  };
+  }
 }
 
 const isUser = (value: any): value is User => {

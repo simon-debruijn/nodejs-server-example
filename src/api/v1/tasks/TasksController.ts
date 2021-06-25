@@ -9,7 +9,7 @@ class TasksController {
     this._repository = repository;
   }
 
-  addTask = async (req: Request, res: Response) => {
+  async addTask(req: Request, res: Response) {
     const task = req.body;
 
     const result = await this._repository.addOne(task);
@@ -19,15 +19,15 @@ class TasksController {
     }
 
     res.status(201).send({ task: result });
-  };
+  }
 
-  getTasks = async (req: Request, res: Response) => {
+  async getTasks(req: Request, res: Response) {
     const parameters = req.body;
     const tasks = await this._repository.find(parameters);
     res.status(200).send({ tasks });
-  };
+  }
 
-  getTaskById = async (req: Request, res: Response) => {
+  async getTaskById(req: Request, res: Response) {
     const { id } = req.params;
     const task = await this._repository.findOneById(id);
 
@@ -36,9 +36,9 @@ class TasksController {
     }
 
     res.status(200).send({ task });
-  };
+  }
 
-  updateTaskById = async (req: Request, res: Response) => {
+  async updateTaskById(req: Request, res: Response) {
     const { id } = req.params;
     const properties = req.body;
     const task = await this._repository.updateOneById(id, properties);
@@ -48,18 +48,18 @@ class TasksController {
     }
 
     res.status(200).send({ task });
-  };
+  }
 
-  updateTasksByIds = async (req: Request, res: Response) => {
+  async updateTasksByIds(req: Request, res: Response) {
     const { ids, properties } = req.body;
     const statusMessage = await this._repository.updateManyByIds(
       ids,
       properties
     );
     res.status(200).send(statusMessage);
-  };
+  }
 
-  deleteTaskById = async (req: Request, res: Response) => {
+  async deleteTaskById(req: Request, res: Response) {
     const { id } = req.params;
     const task = await this._repository.deleteOneById(id);
 
@@ -68,13 +68,13 @@ class TasksController {
     }
 
     res.status(200).send({ task });
-  };
+  }
 
-  deleteTasksByIds = async (req: Request, res: Response) => {
+  async deleteTasksByIds(req: Request, res: Response) {
     const { ids } = req.body;
     const statusMessage = await this._repository.deleteManyByIds(ids);
     res.status(200).send(statusMessage);
-  };
+  }
 }
 
 export { TasksController };

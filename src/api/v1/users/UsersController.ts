@@ -10,7 +10,7 @@ class UsersController {
     this._repository = repository;
   }
 
-  addUser = async (req: Request, res: Response) => {
+  async addUser(req: Request, res: Response) {
     const user = req.body;
 
     const result = await this._repository.addOne(user);
@@ -20,9 +20,9 @@ class UsersController {
     }
 
     res.status(201).send({ user: result });
-  };
+  }
 
-  loginUser = async (req: Request, res: Response) => {
+  async loginUser(req: Request, res: Response) {
     const { email, password } = req.body;
     const users = await this._repository.find({ email, password });
     const user = users?.[0];
@@ -38,15 +38,15 @@ class UsersController {
     });
 
     res.status(200).send({ user: updatedUser, token });
-  };
+  }
 
-  getUsers = async (req: Request, res: Response) => {
+  async getUsers(req: Request, res: Response) {
     const parameters = req.body;
     const users = await this._repository.find(parameters);
     res.status(200).send({ users });
-  };
+  }
 
-  getUserById = async (req: Request, res: Response) => {
+  async getUserById(req: Request, res: Response) {
     const { id } = req.params;
     const user = await this._repository.findOneById(id);
 
@@ -55,9 +55,9 @@ class UsersController {
     }
 
     res.status(200).send({ user });
-  };
+  }
 
-  updateUserById = async (req: Request, res: Response) => {
+  async updateUserById(req: Request, res: Response) {
     const { id } = req.params;
     const properties = req.body;
     const user = await this._repository.updateOneById(id, properties);
@@ -67,18 +67,18 @@ class UsersController {
     }
 
     res.status(200).send({ user });
-  };
+  }
 
-  updateUsersByIds = async (req: Request, res: Response) => {
+  async updateUsersByIds(req: Request, res: Response) {
     const { ids, properties } = req.body;
     const statusMessage = await this._repository.updateManyByIds(
       ids,
       properties
     );
     res.status(200).send(statusMessage);
-  };
+  }
 
-  deleteUserById = async (req: Request, res: Response) => {
+  async deleteUserById(req: Request, res: Response) {
     const { id } = req.params;
     const user = await this._repository.deleteOneById(id);
 
@@ -87,13 +87,13 @@ class UsersController {
     }
 
     res.status(200).send({ user });
-  };
+  }
 
-  deleteUsersByIds = async (req: Request, res: Response) => {
+  async deleteUsersByIds(req: Request, res: Response) {
     const { ids } = req.body;
     const statusMessage = await this._repository.deleteManyByIds(ids);
     res.status(200).send(statusMessage);
-  };
+  }
 }
 
 export { UsersController };

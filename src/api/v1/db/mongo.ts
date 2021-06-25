@@ -3,7 +3,7 @@ import { Db, MongoClient } from 'mongodb';
 class MongoDbConnection {
   private static _db: Db;
 
-  static initialize = async (url: string, dbName: string) => {
+  static async initialize(url: string, dbName: string) {
     const client = new MongoClient(url, {
       useUnifiedTopology: true,
     });
@@ -17,11 +17,11 @@ class MongoDbConnection {
     } finally {
       await client.close();
     }
-  };
+  }
 
-  static getCollection = (name: string) => {
+  static getCollection(name: string) {
     return MongoDbConnection._db.collection(name);
-  };
+  }
 }
 
 const initializeMongoDb = async () => {

@@ -29,9 +29,9 @@ class Task {
     this.completed = completed ?? false;
   }
 
-  static validate = (task: Task): ValidationError[] => {
+  static validate(task: Task): ValidationError[] {
     return validateSync(task);
-  };
+  }
 }
 
 const isTask = (value: any): value is Task => {
