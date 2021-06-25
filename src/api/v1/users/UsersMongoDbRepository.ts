@@ -1,7 +1,7 @@
 import { Collection } from 'mongodb';
 import { Repository } from '../common/RepositoryInterface';
 import { User } from './User';
-import { MongoDbConnection } from '../db/mongo';
+import { MongoDbConnection } from '../db/MongoDbConnection';
 import { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
 
 class UsersMongoDbRepository implements Repository<User> {

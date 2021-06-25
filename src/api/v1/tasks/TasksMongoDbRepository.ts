@@ -1,7 +1,7 @@
 import { Collection } from 'mongodb';
 import { Repository } from '../common/RepositoryInterface';
 import { Task } from './Task';
-import { MongoDbConnection } from '../db/mongo';
+import { MongoDbConnection } from '../db/MongoDbConnection';
 import { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
 
 class TasksMongoDbRepository implements Repository<Task> {
