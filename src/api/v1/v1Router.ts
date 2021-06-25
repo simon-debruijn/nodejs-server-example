@@ -6,7 +6,7 @@ import { UsersMongoDbRepository } from './users/UsersMongoDbRepository';
 
 const v1Router = express.Router();
 
-const usersRepository = UsersMongoDbRepository.instance;
+const usersRepository = UsersMongoDbRepository.getInstance();
 const handleAuthorization = createAuthorizationHandler(usersRepository);
 
 v1Router.use('/users', usersRouter);

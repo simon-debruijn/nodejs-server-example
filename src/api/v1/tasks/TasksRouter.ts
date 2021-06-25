@@ -2,7 +2,7 @@ import express from 'express';
 import { TasksMongoDbRepository } from '../tasks/TasksMongoDbRepository';
 import { TasksController } from './TasksController';
 
-const tasksRepository = TasksMongoDbRepository.instance;
+const tasksRepository = TasksMongoDbRepository.getInstance();
 const tasksController = new TasksController(tasksRepository);
 const tasksRouter = express.Router();
 
