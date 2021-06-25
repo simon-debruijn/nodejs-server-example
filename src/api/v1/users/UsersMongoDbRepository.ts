@@ -5,14 +5,20 @@ import { MongoDbConnection } from '../db/mongo';
 import { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
 
 class UsersMongoDbRepository implements Repository<User> {
+  private static _instance: UsersMongoDbRepository;
   private _users: Collection<User>;
 
   private constructor() {
-    const collection = MongoDbConnection.getCollection('users');
+    const collection = MongoDbConnection.getInstance().getCollection('users');
     this._users = collection;
   }
 
-  static instance: UsersMongoDbRepository = new UsersMongoDbRepository();
+  static getInstance() {
+    if (this._instance) {
+      return this._instance;
+    }
+    return new UsersMongoDbRepository();
+  }
 
   async addOne(newInstance: any): Promise<User | ValidationErrorResponse> {
     const newUser = new User(newInstance);

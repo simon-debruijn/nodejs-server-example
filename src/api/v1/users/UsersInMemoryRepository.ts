@@ -3,11 +3,17 @@ import { ValidationErrorResponse } from '../common/ValidationErrorResponseInterf
 import { User } from './User';
 
 class UsersInMemoryRepository implements Repository<User> {
+  private static _instance: UsersInMemoryRepository;
   private _users: User[] = [];
 
   private constructor() {}
 
-  static instance: UsersInMemoryRepository = new UsersInMemoryRepository();
+  static getInstance() {
+    if (this._instance) {
+      return this._instance;
+    }
+    return new UsersInMemoryRepository();
+  }
 
   async addOne(newInstance: any): Promise<User | ValidationErrorResponse> {
     const newUser = new User(newInstance);

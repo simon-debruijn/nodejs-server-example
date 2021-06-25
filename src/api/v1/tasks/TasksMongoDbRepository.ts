@@ -5,14 +5,24 @@ import { MongoDbConnection } from '../db/mongo';
 import { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
 
 class TasksMongoDbRepository implements Repository<Task> {
+  private static _instance: TasksMongoDbRepository;
   private _tasks: Collection<Task>;
 
   private constructor() {
-    const collection = MongoDbConnection.getCollection('tasks');
+    const collection = MongoDbConnection.getInstance().getCollection('tasks');
     this._tasks = collection;
   }
 
-  static instance: TasksMongoDbRepository = new TasksMongoDbRepository();
+  getInstance(): TasksMongoDbRepository {
+    throw new Error('Method not implemented.');
+  }
+
+  static getInstance() {
+    if (this._instance) {
+      return this._instance;
+    }
+    return new TasksMongoDbRepository();
+  }
 
   async addOne(newInstance: any): Promise<Task | ValidationErrorResponse> {
     const newTask = new Task(newInstance);
