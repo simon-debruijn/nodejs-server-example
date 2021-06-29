@@ -1,9 +1,10 @@
 import express from 'express';
-import { tasksRouter } from './tasks/TasksRouter';
-import { usersRouter } from './users/UsersRouter';
-import { createAuthorizationHandler } from './middleware/createAuthorizationHandler';
-import { UsersMongoDbRepository } from './users/UsersMongoDbRepository';
+
 import { MongoDbConnection } from './db/MongoDbConnection';
+import { createAuthorizationHandler } from './middleware/createAuthorizationHandler';
+import { tasksRouter } from './tasks/TasksRouter';
+import { UsersMongoDbRepository } from './users/UsersMongoDbRepository';
+import { usersRouter } from './users/UsersRouter';
 
 const v1Router = express.Router();
 

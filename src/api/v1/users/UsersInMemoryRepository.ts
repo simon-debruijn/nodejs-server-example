@@ -1,5 +1,5 @@
-import { Repository } from '../common/RepositoryInterface';
-import { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
+import type { Repository } from '../common/RepositoryInterface';
+import type { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
 import { User } from './User';
 
 class UsersInMemoryRepository implements Repository<User> {

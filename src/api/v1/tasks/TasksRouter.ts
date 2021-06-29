@@ -1,7 +1,8 @@
 import express from 'express';
+
 import { MongoDbConnection } from '../db/MongoDbConnection';
-import { TasksMongoDbRepository } from './TasksMongoDbRepository';
 import { TasksController } from './TasksController';
+import { TasksMongoDbRepository } from './TasksMongoDbRepository';
 
 const tasksRepository = TasksMongoDbRepository.getInstance(
   MongoDbConnection.getInstance()

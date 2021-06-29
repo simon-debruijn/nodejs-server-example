@@ -1,7 +1,8 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
+
 import { JwtProvider } from '../common/JwtProvider';
-import { Repository } from '../common/RepositoryInterface';
-import { User } from './User';
+import type { Repository } from '../common/RepositoryInterface';
+import type { User } from './User';
 
 class UsersController {
   private _repository: Repository<User>;

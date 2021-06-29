@@ -1,10 +1,5 @@
-import {
-  validateSync,
-  IsString,
-  IsDefined,
-  ValidationError,
-  IsBoolean,
-} from 'class-validator';
+import type { ValidationError } from 'class-validator';
+import { IsBoolean, IsDefined, IsString, validateSync } from 'class-validator';
 
 class Task {
   _id: string;
@@ -43,4 +38,4 @@ const isTask = (value: any): value is Task => {
   );
 };
 
-export { Task, isTask };
+export { isTask, Task };

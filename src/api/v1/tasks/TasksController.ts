@@ -1,6 +1,7 @@
-import { Request, Response } from 'express';
-import { Repository } from '../common/RepositoryInterface';
-import { Task } from './Task';
+import type { Request, Response } from 'express';
+
+import type { Repository } from '../common/RepositoryInterface';
+import type { Task } from './Task';
 
 class TasksController {
   private _repository: Repository<Task>;

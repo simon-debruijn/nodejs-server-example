@@ -1,8 +1,9 @@
-import { Collection } from 'mongodb';
-import { Repository } from '../common/RepositoryInterface';
+import type { Collection } from 'mongodb';
+
+import type { Repository } from '../common/RepositoryInterface';
+import type { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
+import type { MongoDbConnection } from '../db/MongoDbConnection';
 import { Task } from './Task';
-import { MongoDbConnection } from '../db/MongoDbConnection';
-import { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
 
 class TasksMongoDbRepository implements Repository<Task> {
   private static _instance: TasksMongoDbRepository;

@@ -1,8 +1,9 @@
-import { Collection } from 'mongodb';
-import { Repository } from '../common/RepositoryInterface';
+import type { Collection } from 'mongodb';
+
+import type { Repository } from '../common/RepositoryInterface';
+import type { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
+import type { MongoDbConnection } from '../db/MongoDbConnection';
 import { User } from './User';
-import { MongoDbConnection } from '../db/MongoDbConnection';
-import { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
 
 class UsersMongoDbRepository implements Repository<User> {
   private static _instance: UsersMongoDbRepository;

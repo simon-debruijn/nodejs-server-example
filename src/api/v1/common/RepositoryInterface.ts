@@ -1,4 +1,4 @@
-import { ValidationErrorResponse } from './ValidationErrorResponseInterface';
+import type { ValidationErrorResponse } from './ValidationErrorResponseInterface';
 
 interface Repository<T> {
   addOne(newInstance: unknown): Promise<T | ValidationErrorResponse>;

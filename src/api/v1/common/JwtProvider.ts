@@ -1,5 +1,6 @@
-import { User } from '../users/User';
 import jwt from 'jsonwebtoken';
+
+import type { User } from '../users/User';
 
 class JwtProvider {
   static generateAuthToken({ _id }: User) {

@@ -1,7 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
-import { Repository } from '../common/RepositoryInterface';
-import { isUser, User } from '../users/User';
+import type { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+
+import type { Repository } from '../common/RepositoryInterface';
+import type { User } from '../users/User';
+import { isUser } from '../users/User';
 
 const createAuthorizationHandler =
   (repository: Repository<User>) =>

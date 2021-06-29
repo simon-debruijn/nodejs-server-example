@@ -1,10 +1,10 @@
+import type { ValidationError } from 'class-validator';
 import {
-  validateSync,
+  IsDefined,
   IsEmail,
   IsString,
   MinLength,
-  IsDefined,
-  ValidationError,
+  validateSync,
 } from 'class-validator';
 
 class User {
@@ -55,4 +55,4 @@ const isUser = (value: any): value is User => {
   );
 };
 
-export { User, isUser };
+export { isUser, User };

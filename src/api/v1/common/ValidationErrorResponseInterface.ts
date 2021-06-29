@@ -1,4 +1,4 @@
-import { ValidationError } from 'class-validator';
+import type { ValidationError } from 'class-validator';
 
 interface ValidationErrorResponse {
   error: ValidationError[];

@@ -1,5 +1,5 @@
-import { Repository } from '../common/RepositoryInterface';
-import { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
+import type { Repository } from '../common/RepositoryInterface';
+import type { ValidationErrorResponse } from '../common/ValidationErrorResponseInterface';
 import { Task } from './Task';
 
 class TasksInMemoryRepository implements Repository<Task> {
