@@ -51,9 +51,7 @@ class TasksInMemoryRepository implements Repository<Task> {
     const matchesProperties = (task: Task) =>
       Object.entries(properties).every(([key, value]) => task[key] === value);
 
-    const foundTasks = this._tasks.filter(matchesProperties);
-
-    return foundTasks;
+    return this._tasks.filter(matchesProperties);
   }
 
   async deleteOneById(id: string): Promise<Task | undefined> {
@@ -93,11 +91,9 @@ class TasksInMemoryRepository implements Repository<Task> {
   ): Promise<string> {
     const updatedIdsSet = new Set(ids);
 
-    const newTasks = this._tasks.map((task) =>
+    this._tasks = this._tasks.map((task) =>
       ids.includes(task._id) ? { ...task, ...properties } : task
     );
-
-    this._tasks = newTasks;
 
     return `${updatedIdsSet} tasks were updated`;
   }

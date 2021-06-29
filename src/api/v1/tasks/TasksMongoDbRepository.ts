@@ -9,9 +9,7 @@ class TasksMongoDbRepository implements Repository<Task> {
   private _tasks: Collection<Task>;
 
   private constructor(mongoDbConnection: MongoDbConnection) {
-    const collection = mongoDbConnection.getCollection('tasks');
-
-    this._tasks = collection;
+    this._tasks = mongoDbConnection.getCollection('tasks');
   }
 
   static getInstance(mongoDbConnection: MongoDbConnection) {

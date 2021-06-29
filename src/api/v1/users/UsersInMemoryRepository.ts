@@ -95,11 +95,9 @@ class UsersInMemoryRepository implements Repository<User> {
   ): Promise<string> {
     const updatedIdsSet = new Set(ids);
 
-    const newUsers = this._users.map((user) =>
+    this._users = this._users.map((user) =>
       ids.includes(user._id) ? { ...user, ...properties } : user
     );
-
-    this._users = newUsers;
 
     return `${updatedIdsSet.size} users have been updated`;
   }

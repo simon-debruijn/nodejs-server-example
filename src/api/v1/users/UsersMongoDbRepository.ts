@@ -9,8 +9,7 @@ class UsersMongoDbRepository implements Repository<User> {
   private _users: Collection<User>;
 
   private constructor(mongoDbConnection: MongoDbConnection) {
-    const collection = mongoDbConnection.getCollection('users');
-    this._users = collection;
+    this._users = mongoDbConnection.getCollection('users');
   }
 
   static getInstance(mongoDbConnection: MongoDbConnection) {
