@@ -8,12 +8,12 @@ class TasksInMemoryRepository implements Repository<Task> {
 
   private constructor() {}
 
-  static getInstance() {
-    if (!this._instance) {
-      this._instance = new TasksInMemoryRepository();
+  static getInstance = () => {
+    if (!TasksInMemoryRepository._instance) {
+      TasksInMemoryRepository._instance = new TasksInMemoryRepository();
     }
-    return this._instance;
-  }
+    return TasksInMemoryRepository._instance;
+  };
 
   addOne = async (
     newInstance: Task
@@ -43,7 +43,7 @@ class TasksInMemoryRepository implements Repository<Task> {
       Object.entries(properties).every(([key, value]) => task[key] === value);
 
     return this._tasks.filter(matchesProperties);
-  }
+  };
 
   deleteOneById = async (id: string): Promise<Task | undefined> => {
     const foundTask = this._tasks.find((task) => task._id === id);

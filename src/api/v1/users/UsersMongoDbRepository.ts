@@ -13,14 +13,18 @@ class UsersMongoDbRepository implements Repository<User> {
     this._users = mongoDbConnection.getCollection('users');
   }
 
-  static getInstance(mongoDbConnection: MongoDbConnection) {
-    if (!this._instance) {
-      this._instance = new UsersMongoDbRepository(mongoDbConnection);
+  static getInstance = (mongoDbConnection: MongoDbConnection) => {
+    if (!UsersMongoDbRepository._instance) {
+      UsersMongoDbRepository._instance = new UsersMongoDbRepository(
+        mongoDbConnection
+      );
     }
-    return this._instance;
-  }
+    return UsersMongoDbRepository._instance;
+  };
 
-  async addOne(newInstance: any): Promise<User | ValidationErrorResponse> {
+  addOne = async (
+    newInstance: any
+  ): Promise<User | ValidationErrorResponse> => {
     const newUser = new User(newInstance);
     const validationErrors = User.validate(newUser);
 
@@ -30,11 +34,11 @@ class UsersMongoDbRepository implements Repository<User> {
 
     await this._users.insertOne(newUser);
     return newUser;
-  }
+  };
 
-  async addMany(
+  addMany = async (
     newInstances: any[]
-  ): Promise<User[] | ValidationErrorResponse> {
+  ): Promise<User[] | ValidationErrorResponse> => {
     const newUsers = newInstances.map((newInstance) => new User(newInstance));
     const validationErrors = newUsers.reduce((previous, current) => {
       return [...previous, ...User.validate(current)];
@@ -46,31 +50,31 @@ class UsersMongoDbRepository implements Repository<User> {
 
     await this._users.insertMany(newUsers);
     return newUsers;
-  }
+  };
 
-  async findOneById(id: string): Promise<User | undefined> {
+  findOneById = async (id: string): Promise<User | undefined> => {
     return (await this._users.findOne({ _id: id })) ?? undefined;
-  }
+  };
 
-  async find(properties?: Partial<User>): Promise<User[]> {
+  find = async (properties?: Partial<User>): Promise<User[]> => {
     return await this._users.find(properties).toArray();
-  }
+  };
 
-  async deleteOneById(id: string): Promise<User | undefined> {
+  deleteOneById = async (id: string): Promise<User | undefined> => {
     return (await this._users.findOneAndDelete({ _id: id })).value;
-  }
+  };
 
-  async deleteManyByIds(ids: string[]): Promise<string> {
+  deleteManyByIds = async (ids: string[]): Promise<string> => {
     const { deletedCount } = await this._users.deleteMany({
       _id: { $nin: ids },
     });
     return `${deletedCount} users were deleted`;
-  }
+  };
 
-  async updateOneById(
+  updateOneById = async (
     id: string,
     properties: Partial<User>
-  ): Promise<User | undefined> {
+  ): Promise<User | undefined> => {
     const foundUser = await this._users.findOne({ _id: id });
 
     if (!foundUser) return undefined;
@@ -81,18 +85,18 @@ class UsersMongoDbRepository implements Repository<User> {
         { ...foundUser, ...properties }
       )
     ).value;
-  }
+  };
 
-  async updateManyByIds(
+  updateManyByIds = async (
     ids: string[],
     properties: Partial<User>
-  ): Promise<string> {
+  ): Promise<string> => {
     const { modifiedCount } = await this._users.updateMany(
       { _id: { $nin: ids } },
       properties
     );
     return `${modifiedCount} users were updated`;
-  }
+  };
 }
 
 export { UsersMongoDbRepository };

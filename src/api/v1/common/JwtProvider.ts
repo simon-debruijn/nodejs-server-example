@@ -4,7 +4,7 @@ import type { User } from '../users/User';
 
 class JwtProvider {
   static generateAuthToken = ({ _id }: User) => {
-      return jwt.sign({ _id }, process.env.JWT_SECRET ?? '', {
+    return jwt.sign({ _id }, process.env.JWT_SECRET ?? '', {
       expiresIn: '1 day',
     });
   };

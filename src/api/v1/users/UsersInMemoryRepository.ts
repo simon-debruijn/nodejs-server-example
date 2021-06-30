@@ -8,12 +8,12 @@ class UsersInMemoryRepository implements Repository<User> {
 
   private constructor() {}
 
-  static getInstance() {
-    if (!this._instance) {
-      this._instance = new UsersInMemoryRepository();
+  static getInstance = () => {
+    if (!UsersInMemoryRepository._instance) {
+      UsersInMemoryRepository._instance = new UsersInMemoryRepository();
     }
-    return this._instance;
-  }
+    return UsersInMemoryRepository._instance;
+  };
 
   addOne = async (
     newInstance: any

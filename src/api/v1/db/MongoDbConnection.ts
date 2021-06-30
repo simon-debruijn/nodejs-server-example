@@ -26,23 +26,23 @@ class MongoDbConnection {
       });
   }
 
-  static getInstance() {
-    if (!this._instance) {
-      this._instance = new MongoDbConnection(
+  static getInstance = () => {
+    if (!MongoDbConnection._instance) {
+      MongoDbConnection._instance = new MongoDbConnection(
         `${process.env.MONGODB_URL}`,
         `${process.env.MONGODB_DB_NAME}`
       );
     }
-    return this._instance;
-  }
+    return MongoDbConnection._instance;
+  };
 
-  isConnected() {
+  isConnected = () => {
     return !!this._client?.isConnected();
-  }
+  };
 
-  getCollection(name: string) {
+  getCollection = (name: string) => {
     return this._db?.collection(name);
-  }
+  };
 }
 
 export { MongoDbConnection };
